@@ -6,6 +6,8 @@ import time
 import requests
 from bs4 import BeautifulSoup
 
+logging.basicConfig(level=logging.INFO)
+
 
 class ClockIn:
     __username = ""
@@ -110,6 +112,11 @@ def server_push(msg: str, js: json):
         'Content-type': 'application/x-www-form-urlencoded',
     }
     res = requests.post(url=server_push_url, headers=headers)
+    try:
+        params = json.loads(res.text)
+        logging.info(" server push success ~")
+    except:
+        logging.error(" parse server push result failed ~")
     return res
 
 
